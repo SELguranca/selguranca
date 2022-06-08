@@ -6,9 +6,9 @@ from typing import List
 
 class CameraChannel:
     queue = Queue(maxsize=60)
-    listeners: List[Queue] = []
+    listeners: List[Queue[bytes]] = []
 
-    def add_listener(self, q: Queue) -> int:
+    def add_listener(self, q: Queue[bytes]) -> int:
         index = len(self.listeners)
         self.listeners.append(q)
         return index
@@ -19,23 +19,13 @@ class CameraChannel:
         return True
 
 
-class AlarmChannel:
-    queue = Queue(maxsize=1)
-
-    def publish(self, frame: int) -> bool:
-        return True
-
-    def subscribe(self) -> bool:
-        return True
-
-
 Command = enum.Enum("Command", "UP RIGHT DOWN LEFT", module=__name__)
 
 
 class ControlsChannel:
-    queue = Queue(maxsize=10)
+    queue: Queue[Command] = Queue(maxsize=10)
 
-    def publish(self, frame: Command) -> bool:
+    def send(self, cmd: Command) -> bool:
         return True
 
     def subscribe(self) -> bool:
@@ -43,5 +33,4 @@ class ControlsChannel:
 
 
 Camera = CameraChannel()
-Alarm = AlarmChannel()
 Controls = ControlsChannel()

@@ -19,6 +19,14 @@
             <br />
             FPS: <span id="fps">0</span>
         </div>
+        <br />
+        <div id="controls">
+            <form id='cmd_form' action="servo" method="post" onsubmit="send(); return false;">
+                <input type="text" name="cmd" id="cmd" placeholder="1,2,3,4" />
+                <input type="submit" value="submit">Send</input>
+            </form>
+        </div>
+        <script src="https://unpkg.com/petite-vue"></script>
         <script src="/static/main.js"></script>
     </body>
 </html>

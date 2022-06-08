@@ -10,3 +10,12 @@ setInterval(() => {
     fps_display.innerHTML = fps.toString();
     fps = 0;
 }, 1000);
+
+// document.getElementById("cmd_form").addEventListener("submit", (ev) => {
+// });
+
+async function send() {
+    // ev.preventDefault();
+    let f = document.getElementById("cmd_form");
+    f.submit();
+}
