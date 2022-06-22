@@ -4,6 +4,7 @@ let fps = 0;
 
 img.addEventListener("load", (ev) => {
     fps++;
+    console.log(ev) 
 });
 
 setInterval(() => {
@@ -14,8 +15,11 @@ setInterval(() => {
 // document.getElementById("cmd_form").addEventListener("submit", (ev) => {
 // });
 
-async function send() {
-    // ev.preventDefault();
-    let f = document.getElementById("cmd_form");
-    f.submit();
-}
+async function send(cmd) {
+    // console.log("Enviando requisição")
+    // let text = document.getElementById("cmd");
+    // let cmd = text.value;
+    let res = await fetch(`/servo/${cmd}`);
+    }
+
+

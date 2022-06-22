@@ -13,10 +13,13 @@ class CameraChannel:
         self.listeners.append(q)
         return index
 
-    def send(self, jpeg: bytes) -> bool:
+    def broadcast(self, jpeg: bytes) -> bool:
         for q in self.listeners:
             q.put(jpeg)
         return True
+    
+    def send(self, id:int, x):
+        self.listeners[id].put(x)
 
 
 Command = enum.Enum("Command", "UP RIGHT DOWN LEFT", module=__name__)

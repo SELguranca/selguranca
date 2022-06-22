@@ -1,4 +1,5 @@
 """Flask WebServer."""
+from glob import escape
 from queue import Queue
 from ComputerVision import Frame
 import Message
@@ -6,8 +7,10 @@ import time
 from typing import Generator
 from flask import Flask, request
 from flask import render_template, Response
+from ServoMotor import mH, mV
 
 app = Flask(__name__)
+please_stop = object()
 
 
 def start() -> None:
@@ -19,13 +22,17 @@ def start() -> None:
 def camera_feed_view() -> Response:
     def frame_generator() -> Generator[bytes, None, None]:
         my_queue: Queue[bytes] = Queue(maxsize=30)
-        Message.Camera.add_listener(my_queue)
+        index = Message.Camera.add_listener(my_queue)
         while True:
             frame: bytes = my_queue.get()
+            if frame == please_stop:
+                break
+            # stream_id_header: bytes = f"Stream-ID: {index}\r\n".encode("utf-8")
             yield (b'--current_frame\r\n'
                    b'Content-Type: image/jpeg\r\n'
                    b'Content-Encoding: gzip\r\n'
                    b'Content-Transfer-Encoding: binary\r\n'
+                #    + stream_id_header +
                    b'\r\n' + frame + b'\r\n'
                    b'--current_frame\r\n')
 
@@ -34,19 +41,34 @@ def camera_feed_view() -> Response:
     return app.response_class(frame_generator(), mimetype='multipart/x-mixed-replace; boundary=current_frame')
 
 
-@app.route('/servo', methods=['GET', 'POST'])
-def servo_view() -> Response:
-    if request.method == 'POST':
-        user_input_command: str = request.form.get('cmd')
-        if user_input_command:
-            cmd = user_input_command.split('=')[-1]
-            print(f"[SERVO] - User commanded: {cmd}")
-        print(request.form)
-        return Response(f"Command received: {user_input_command}")
-    elif request.method == 'GET':
-        return Response("ABC")
+@app.route('/servo/<string:cmd>', methods=['GET'])
+def servo_view(cmd: str) -> Response:
+    if request.method == 'GET':
+        cmd = escape(cmd)
+        # print(f"Recebido comando pro servo: {cmd}")
+        if cmd == "up":
+            mV.controle("+")
+        elif cmd == "down":
+            mV.controle("-")
+        elif cmd == "left":
+            mH.controle("+")
+        elif cmd == "right":
+            mH.controle("-")
+        elif cmd == "sweep_v":
+            mV.Varredura()
+        elif cmd == "sweep_h":
+            mH.Varredura()
+        else:
+            pass
+        return Response(cmd)
     else:
         return Response("XYZ")
+
+@app.route("/camera_ctrl/<int:id>/<string:cmd>")
+def camera_ctrl(id: int, cmd: str):
+    if cmd == 'stop':
+        Message.Camera.send(id, please_stop)
+
 
 
 @app.route("/")

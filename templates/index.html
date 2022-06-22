@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/static/style.css" />
-        <title>SELgurança</title>
-    </head>
 
-    <body>
-        <div id="camera_content">
-            <img
-                id="camera"
-                src="/camera_feed"
-                alt="camera live feed"
-                loading="eager"
-            />
-            <br />
-            FPS: <span id="fps">0</span>
-        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>SELgurança</title>
+</head>
+
+<body>
+    <div id="camera_content">
+        <img id="camera" src="/camera_feed" alt="camera live feed" loading="eager" />
         <br />
-        <div id="controls">
-            <form id='cmd_form' action="servo" method="post" onsubmit="send(); return false;">
+        FPS: <span id="fps">0</span>
+    </div>
+    <br />
+    <div id="controls">
+        <!-- <form id='cmd_form' action="servo" method="post" onsubmit="send(); return false;">
                 <input type="text" name="cmd" id="cmd" placeholder="1,2,3,4" />
                 <input type="submit" value="submit">Send</input>
-            </form>
-        </div>
-        <script src="https://unpkg.com/petite-vue"></script>
-        <script src="/static/main.js"></script>
-    </body>
+            </form> -->
+        <button onclick="send('up')">up</button>
+        <button onclick="send('down')">down</button>
+        <button onclick="send('left')">left</button>
+        <button onclick="send('right')">right</button>
+        <button onclick="send('sweep_v')">sweep_v</button>
+        <button onclick="send('sweep_h')">sweep_h</button>
+    </div>
+    <script src="/static/main.js"></script>
+</body>
+
 </html>

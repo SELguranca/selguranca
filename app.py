@@ -10,7 +10,7 @@ import WebServer
 
 def capture(stop: th.Event, fps: int, detect: bool):
     """Camera frame capture thread."""
-    camera = cv2.VideoCapture(1)
+    camera = cv2.VideoCapture(0)
     while not stop.wait(0):
         ok, frame = camera.read()
         if not ok or frame is None or np.shape(frame) == ():
@@ -19,12 +19,11 @@ def capture(stop: th.Event, fps: int, detect: bool):
 
         if detect:
             frame = ComputerVision.detect_people(frame)
-
         _, buffer = cv2.imencode('.jpg', frame, params=[
                                  cv2.IMWRITE_JPEG_QUALITY, 75, cv2.IMWRITE_JPEG_OPTIMIZE, 1, cv2.IMWRITE_JPEG_PROGRESSIVE, 1])
         jpeg = buffer.tobytes()
-        Message.Camera.send(jpeg)
-        cv2.waitKey(1000//fps)
+        Message.Camera.broadcast(jpeg)
+        time.sleep(1/fps)
     camera.release()
 
 

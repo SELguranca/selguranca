@@ -1,11 +1,10 @@
 # antes derodar o código : sudo pigiod
-import RPi.GPIO as GPIO
 import pigpio #sudo apt-get install python3-pigpio
 import time
 
 #Portas para os PWM de cada Servo
-servo_H = 17
-servo_V = 18
+servo_H = 18
+servo_V = 17
 
 ang1=90
 ang2=90
@@ -42,20 +41,38 @@ def Angulo(angulo_H=0,angulo_V=0,slp=1):
 
 # Incrementa ou decrementa a posição do servo
 
-def Controle_manua (dir, ang1, ang2):
+def controle(x):
+    global ang1, ang2
+    ang1, ang2 = Controle_manua(x, ang1, ang2)
+
+def Controle_manua(dir, ang1, ang2):
     step=10
-    if (dir == "D"):
+    if (dir == "E"):
         ang1=ang1+step
         Angulo(ang1, ang2, 0.5)
-    elif (dir == "E"):
+    elif (dir == "D"):
         ang1=ang1-step
         Angulo(ang1, ang2, 0.5)
-    elif (dir == "C"):
+    elif (dir == "B"):
         ang2=ang2+step
         Angulo(ang1, ang2, 0.5)
-    elif (dir == "B"):
+    elif (dir == "C"):
         ang2=ang2-step
         Angulo(ang1, ang2, 0.5)
+    elif (dir == "H"):
+        for i in range(70,150):
+            Angulo(i,90,0.05)
+        for i in range(150,70,-1):
+            Angulo(i,90,0.05)    
+    elif(dir == "V"): # Servo Vertical
+        for i in range(80,140):
+            Angulo(90,i,0.05)
+            ang2 = 90
+            ang1 = 90
+        for i in range(140,90,-1):
+            Angulo(90,i,0.05)
+            ang2 = 90
+            ang1 = 90
     else:
         print("error")
     time.sleep(0.5)
@@ -78,10 +95,10 @@ def Varredura(servo):
 # MAIN
 #valores iniciais dos angulos:
 
-Varredura("H")
-Varredura("V")
-ang1, ang2= Controle_manua ("E", ang1, ang2)
-ang1, ang2= Controle_manua ("D", ang1, ang2)
-ang1, ang2= Controle_manua ("C", ang1, ang2)
-ang1, ang2= Controle_manua ("B", ang1, ang2)
+#Varredura("H")
+#Varredura("V")
+#ang1, ang2= Controle_manua ("E", ang1, ang2)
+#ang1, ang2= Controle_manua ("D", ang1, ang2)
+#ang1, ang2= Controle_manua ("C", ang1, ang2)
+#ang1, ang2= Controle_manua ("B", ang1, ang2)
 print("ok")

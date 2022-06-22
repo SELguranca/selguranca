@@ -16,9 +16,9 @@ hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
 def detect_people(frame: Frame) -> Frame:
     """Run HOG and annotates frame with detected coordinates."""
-    width_ratio = 1
+    width_ratio = 2
     processing_view_width = ceil(640/width_ratio)
-    heigth_ratio = 1
+    heigth_ratio = 2
     processing_view_height = ceil(480/heigth_ratio)
 
     processing_frame = cv2.resize(
