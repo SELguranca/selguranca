@@ -56,6 +56,40 @@ $(function () {
 
 
 //--------------------------------- Teste ---------------------------------
+// Commented HTML:
+// <span class="dot"></span>
+
+
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+    return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+  }
+  
+  const Valor1 = document.getElementById("value1");
+  const Valor2 = document.getElementById("value2");
+  const Sweeper1 = document.getElementById("Sweeper1");
+  const Sweeper2 = document.getElementById("Sweeper2");
+  
+  (function loop() {
+    var value1 = Math.random() * 100;
+    var value2 = Math.random() * 100;
+    
+    value1 = Math.round(value1.map(0,100,50,130));
+    value2 = Math.round(value2.map(0,100,50,130));
+    
+    Sweeper1.style.transform = 'rotate(' + (90-value1) + 'deg)';
+    Sweeper2.style.transform = 'rotate(' + (value2) + 'deg)';
+    
+    Valor1.innerText = "θ = " + value1 + "°";
+    Valor2.innerText = "φ = " + value2 + "°";
+   
+    window.setTimeout(loop, 2000);
+  })();
+  
+
+
+
+
+
 function init() {
     // easal stuff goes hur
     var xCenter = 150;

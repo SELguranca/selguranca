@@ -5,21 +5,9 @@
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)*/
 
 :root {
-  --blue: #0000ff;
-  --indigo: #3d5afe;
-  --purple: #aa00ff;
-  --pink: #f50057;
-  --red: #ff1744;
-  --orange: #ff9100;
-  --yellow: #ffff00;
-  --green: #00e676;
-  --teal: #1de9b6;
-  --cyan: #00e5ff;
-  --white: #ffffff;
-  --gray: #868e96;
   --gray-dark: #343a40;
   --primary: #00e676;
-  --secondary: #ffff00;
+  --secondary:  #343a40;
   --success: #00e676;
   --info: #aa00ff;
   --warning: #ff9100;
@@ -42,16 +30,21 @@
 /*!
 * -----------------Teste------------------------- 
 */
+body{
+  background-color: #343a40;
+}
+
+
 
   #joystick {
-    height: 300px;
-    width: 300px;
-    border-radius: 300px;
-    -moz-border-radius: 300px;
-    -webkit-border-radius: 300px;
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
     text-align: center;
-    background-color: #80d5ff;
-    font: 24px/300px Helvetica, Arial, sans-serif;
+    background-color: #fdf9f9e5;
+    font: 24px/200px Helvetica, Arial, sans-serif;
     cursor: all-scroll;
     user-select: none;
     z-index: -100;
@@ -66,6 +59,98 @@
     user-select: none;
   }
 
+  .ca.t {
+    text-align: center;
+    height: 150px;
+    width: 150px;
+    border-radius: 10%;
+    background-color: #202020;
+    position: relative;
+    margin: 10px;
+    vertical-align: middle;
+  }
+
+
+  .caixote {
+    height: 220px;
+    width: 250px;
+    border-radius: 10%;
+    display: flex;
+    background-color: #202020;
+    justify-content: space-around;
+    position: relative;
+    margin: 10px;
+  }
+  
+  .caixote.two {
+    height: 260px;
+    width: 250px;
+    border-radius: 10%;
+    display: flex;
+    background-color: #202020;
+    justify-content: space-around;
+    position: relative;
+    margin: 10px;
+  }
+  
+  
+  .title {
+    color: #A0A0A0;
+    font-family: Helvetica, sans-serif;
+    font-size: 10px;
+    position: absolute;
+    top: 10px;
+  }
+  
+  
+  .value {
+    color: #909090;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+    position: absolute;
+    bottom: 20px;
+  }
+  
+  .dot {
+    height: 200px;
+    width: 200px;
+    background-color: #505050;
+    border-radius: 50%;
+    position: absolute;
+    bottom : 30px;
+  }
+  
+  .positionSVG{
+    position: absolute;
+    bottom: 60px;
+    transform-origin: 50% 82%;
+  }
+  
+  .positionSVG.one{
+    fill: #404040;
+  }
+  
+  .positionSVG.two{
+    fill: #228EBF;
+    transition: transform 0.5s ease-in;
+  }
+  
+  .positionSVG.three{
+    fill: #404040;
+    left: 27px;
+    bottom: 115px;
+    transform: rotate(90deg);
+  }
+  
+  .positionSVG.four{
+    fill: #22bf88;
+    left: 70px;
+    bottom: 115px;
+    transform: rotate(90deg);
+    transition: transform 0.5s ease-in;
+  }
+  
+
 /*!
 * -----------------------------------------------
 */
@@ -76,7 +161,9 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: transparent; 
+  background-color: #ffff;
+}
 
 @-ms-viewport {
   width: device-width; }
@@ -90,9 +177,9 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #343a40;
+  color: #ffffff;
   text-align: left;
-  background-color: #ffffff; }
+   }
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -169,7 +256,7 @@ sup {
   top: -.5em; }
 
 a {
-  color: #343a40;
+  color: #ffffff;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects; }
@@ -331,10 +418,10 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-family: inherit;
+  font-family: Helvetica, sans-serif;
   font-weight: 700;
   line-height: 1.5;
-  color: #000000; }
+  color: #ffffff; }
 
 h1, .h1 {
   font-size: 2.5rem; }
@@ -392,7 +479,7 @@ small,
 mark,
 .mark {
   padding: 0.2em;
-  background-color: #fcf8e3; }
+  background-color: #252424; }
 
 .list-unstyled {
   padding-left: 0;
@@ -1238,7 +1325,7 @@ pre {
   .table tbody + tbody {
     border-top: 4px solid #f8f9fa; }
   .table .table {
-    background-color: #ffffff; }
+    background-color: #343a40; }
 
 .table-sm th,
 .table-sm td {
@@ -1254,7 +1341,7 @@ pre {
     border-bottom-width: 4px; }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05); }
+  background-color: #343a40; }
 
 .table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.075); }
@@ -1262,7 +1349,7 @@ pre {
 .table-primary,
 .table-primary > th,
 .table-primary > td {
-  background-color: #b8f8d9; }
+  background-color: #343a40; }
 
 .table-hover .table-primary:hover {
   background-color: #a1f6cd; }
@@ -1273,7 +1360,7 @@ pre {
 .table-secondary,
 .table-secondary > th,
 .table-secondary > td {
-  background-color: #ffffb8; }
+  background-color: #343a40; }
 
 .table-hover .table-secondary:hover {
   background-color: #ffff9f; }
@@ -7399,7 +7486,7 @@ footer hr {
 
 /*all themes colors*/
 .bg-black {
-  background-color: #000000; }
+  background-color: #343a40; }
 
 .bg-blue {
   background-color: #0000ff; }
@@ -7436,7 +7523,7 @@ footer hr {
   position: fixed;
   top: 250px;
   width: 250px;
-  background: #ffffff;
+  background: #343a40;
   color: #343a40;
   z-index: 100;
   padding: 20px;
@@ -7488,3 +7575,9 @@ footer hr {
 @media screen and (max-width: 768px) {
   .switcher-wrap {
     display: none; } }
+
+/* Teste BG Color
+body{
+  background-color: #343a40;
+}
+*/
