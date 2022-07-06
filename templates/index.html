@@ -378,11 +378,7 @@
                     </div>
 
                     <div class="col-md-8 mx-auto my-auto text-center">
-                        <img
-                            class="img-responsive"
-                            src="../static/img/1.jpg"
-                            alt="teste"
-                        />
+                        <img class="img-responsive" alt="teste" id="camera" />
                     </div>
 
                     <div class="col-md-2 mx-auto my-auto text-center">
@@ -395,6 +391,7 @@
                                     <button
                                         type="button"
                                         class="btn btn-light btn-lg"
+                                        onclick="servo.send('SWEEP_H')"
                                     >
                                         Varrer
                                     </button>
@@ -426,6 +423,7 @@
                                     <button
                                         type="button"
                                         class="btn btn-light btn-lg"
+                                        onclick="servo.send('SWEEP_V')"
                                     >
                                         Varrer
                                     </button>

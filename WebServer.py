@@ -4,14 +4,13 @@ from multiprocessing import Lock
 from queue import Queue
 import time
 from typing import Generator
-from wsgiref.simple_server import server_version
 
 from flask import Flask
 from flask import render_template, Response, request
 
 import Message
 from ServoMotor import mH, mV
-
+from ServoController import Controller
 
 app = Flask(__name__)
 
@@ -19,6 +18,8 @@ app = Flask(__name__)
 please_stop = object()
 
 servo_access = Lock()
+
+controller = Controller(mV, mH)
 
 
 def start(config: dict) -> None:
@@ -93,21 +94,9 @@ def controls_release(key: str):
 def servo_view(cmd: str) -> Response:
     cmd = escape(cmd)
     print(f"Recebido comando pro servo: '{cmd}'")
-    if cmd == "up":
-        mV.controle("+")
-    elif cmd == "down":
-        mV.controle("-")
-    elif cmd == "left":
-        mH.controle("+")
-    elif cmd == "right":
-        mH.controle("-")
-    elif cmd == "sweep_v":
-        mV.varredura()
-    elif cmd == "sweep_h":
-        mH.varredura()
-    else:
-        pass
-    return Response(cmd)
+    cmd_e = Message.Command[cmd.upper()]
+    _, x, y = controller.consume(cmd_e)
+    return Response(f"{x}, {y}")
 
 
 @app.route("/")

@@ -15,8 +15,27 @@ class Controller:
         self.motors[Angles.THETA] = vertical
         self.motors[Angles.PHI] = horizontal
 
-    def consume(self, command: Command) -> bool:
-        return False
+    def consume(self, command: Command) -> tuple[bool, float, float]:
+        if command == Command.SWEEP_V:
+            self.motors[Angles.THETA].varredura()
+        elif command == Command.SWEEP_H:
+            self.motors[Angles.PHI].varredura()
+        elif command == Command.UP:
+            self.motors[Angles.THETA].controle("+")
+        elif command == Command.DOWN:
+            self.motors[Angles.THETA].controle("-")
+        elif command == Command.LEFT:
+            self.motors[Angles.PHI].controle("+")
+        elif command == Command.RIGHT:
+            self.motors[Angles.PHI].controle("-")
+        else:
+            print(f"Unknown Command: {str(command)}")
+            return (False, -1, -1)
+        x = self.motors[Angles.PHI].angle
+        y = self.motors[Angles.THETA].angle
+        return (True, x, y)
 
     def reset(self) -> bool:
-        return False
+        self.motors[Angles.THETA].angulo(0)
+        self.motors[Angles.PHI].angulo(0)
+        return True
