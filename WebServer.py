@@ -1,38 +1,53 @@
 """Flask WebServer."""
 from glob import escape
+from multiprocessing import Lock
 from queue import Queue
-from ComputerVision import Frame
-import Message
 import time
 from typing import Generator
-from flask import Flask, request
-from flask import render_template, Response
+from wsgiref.simple_server import server_version
+
+from flask import Flask
+from flask import render_template, Response, request
+
+import Message
 from ServoMotor import mH, mV
 
+
 app = Flask(__name__)
+
+# Frame Generator Sentinel
 please_stop = object()
 
-
-def start() -> None:
-    app.run(host="0.0.0.0", port="8051",
-                 debug=True, use_reloader=False)
+servo_access = Lock()
 
 
-@app.route('/camera_feed')
-def camera_feed_view() -> Response:
+def start(config: dict) -> None:
+    app.run(host=config['host'], port=config['port'],
+            debug=True, use_reloader=False)
+
+
+@app.route('/camera_feed/<string:stream_id>')
+def camera_feed_view(stream_id: str) -> Response:
+    stream_id = escape(stream_id)
+
     def frame_generator() -> Generator[bytes, None, None]:
-        my_queue: Queue[bytes] = Queue(maxsize=30)
-        index = Message.Camera.add_listener(my_queue)
+        nonlocal stream_id
+        if not Message.Camera.valid_listener(stream_id):
+            print(f"Stream '{stream_id}' NOT in listeners, generating...")
+            stream_id = Message.Camera.generate()
+            yield stream_id.encode('utf-8')
+            return
+
+        frames: Queue[bytes] = Queue(maxsize=30)
+        Message.Camera.register(stream_id, frames)
         while True:
-            frame: bytes = my_queue.get()
-            if frame == please_stop:
+            frame: bytes = frames.get()
+            if frame is please_stop:
                 break
-            # stream_id_header: bytes = f"Stream-ID: {index}\r\n".encode("utf-8")
             yield (b'--current_frame\r\n'
                    b'Content-Type: image/jpeg\r\n'
                    b'Content-Encoding: gzip\r\n'
                    b'Content-Transfer-Encoding: binary\r\n'
-                #    + stream_id_header +
                    b'\r\n' + frame + b'\r\n'
                    b'--current_frame\r\n')
 
@@ -41,34 +56,58 @@ def camera_feed_view() -> Response:
     return app.response_class(frame_generator(), mimetype='multipart/x-mixed-replace; boundary=current_frame')
 
 
-@app.route('/servo/<string:cmd>', methods=['GET'])
-def servo_view(cmd: str) -> Response:
-    if request.method == 'GET':
-        cmd = escape(cmd)
-        # print(f"Recebido comando pro servo: {cmd}")
-        if cmd == "up":
-            mV.controle("+")
-        elif cmd == "down":
-            mV.controle("-")
-        elif cmd == "left":
-            mH.controle("+")
-        elif cmd == "right":
-            mH.controle("-")
-        elif cmd == "sweep_v":
-            mV.Varredura()
-        elif cmd == "sweep_h":
-            mH.Varredura()
-        else:
-            pass
-        return Response(cmd)
-    else:
-        return Response("XYZ")
-
-@app.route("/camera_ctrl/<int:id>/<string:cmd>")
-def camera_ctrl(id: int, cmd: str):
+@app.route("/camera_ctrl/<string:stream_id>/<string:cmd>")
+def camera_ctrl(stream_id: str, cmd: str):
+    stream_id = escape(stream_id)
+    cmd = escape(cmd)
     if cmd == 'stop':
-        Message.Camera.send(id, please_stop)
+        print(f"Stopping stream: '{stream_id}'")
+        Message.Camera.send(stream_id, please_stop)
+        Message.Camera.remove(stream_id)
+    return Response('0')
 
+
+@app.route("/controls/request")
+def controls_request() -> Response:
+    ok = servo_access.acquire(block=False)
+    if ok:
+        key = Message.Controls.generate()
+        print(f"Servo Controls aquired\n\t key: '{key}'")
+        return Response(key)
+    return Response('-1')
+
+
+@app.route('/controls/release/')
+def controls_release(key: str):
+    key = escape(request.headers['Api-Key'])
+    if Message.Controls.check(key):
+        servo_access.release()
+        print(f"Servo Controls released with key: '{key}'")
+        Message.Controls.reset()
+        return Response('0')
+    else:
+        return Response('-1')
+
+
+@app.route('/servo/<string:cmd>')
+def servo_view(cmd: str) -> Response:
+    cmd = escape(cmd)
+    print(f"Recebido comando pro servo: '{cmd}'")
+    if cmd == "up":
+        mV.controle("+")
+    elif cmd == "down":
+        mV.controle("-")
+    elif cmd == "left":
+        mH.controle("+")
+    elif cmd == "right":
+        mH.controle("-")
+    elif cmd == "sweep_v":
+        mV.varredura()
+    elif cmd == "sweep_h":
+        mH.varredura()
+    else:
+        pass
+    return Response(cmd)
 
 
 @app.route("/")
