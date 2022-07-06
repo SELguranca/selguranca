@@ -1,32 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/static/style.css" />
-        <title>SELgurança</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <title>SELGURANÇA</title>
+        <meta name="description" content="Sistema de segurança sel" />
+
+        <!--Google fonts-->
+        <link
+            href="https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i"
+            rel="stylesheet"
+        />
+
+        <!--vendors styles-->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+
+        <!-- Bootstrap CSS / Color Scheme -->
+        <link
+            rel="stylesheet"
+            href="../static/css/default.css"
+            id="theme-color"
+        />
     </head>
 
-    <body>
-        <div id="camera_content">
-            <img id="camera" alt="camera live feed" loading="eager" />
-            <br />
-            FPS: <span id="fps">0</span>
-        </div>
-        <br />
-        <div id="controls">
-            <!-- <form id='cmd_form' action="servo" method="post" onsubmit="send(); return false;">
-                <input type="text" name="cmd" id="cmd" placeholder="1,2,3,4" />
-                <input type="submit" value="submit">Send</input>
-            </form> -->
-            <button onclick="servo.send('up')">up</button>
-            <button onclick="servo.send('down')">down</button>
-            <button onclick="servo.send('left')">left</button>
-            <button onclick="servo.send('right')">right</button>
-            <button onclick="servo.send('sweep_v')">sweep_v</button>
-            <button onclick="servo.send('sweep_h')">sweep_h</button>
-        </div>
-        <script src="/static/main.js"></script>
+    <body class="bg-dark" onload="init();">
+        <!--class="noselect"-->
+        <!--navigation-->
+        <nav
+            class="navbar navbar-expand-md navbar-light bg-dark fixed-top sticky-navigation"
+        >
+            <a class="navbar-brand mx-auto" href="index.html">
+                <img
+                    class="img-responsive"
+                    src="../static/img/logo.png"
+                    alt="logo"
+                />
+            </a>
+            <button
+                class="navbar-toggler navbar-toggler-right border-0"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarCollapse"
+                aria-controls="navbarCollapse"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span data-feather="grid"></span>
+            </button>
+        </nav>
+
+        <!--Câmera Frame-->
+        <section id="home">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 mx-auto my-auto text-center">
+                        <div id="Horizontal" class="caixote">
+                            <div id="title1" class="title">
+                                <h2>Ângulo Horizontal</h2>
+                            </div>
+
+                            <div id="gauge" class="positionSVG one">
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                <!-- Creator: CorelDRAW 2020 (64 Bit) -->
+                                <?xml-stylesheet href="HorizontalSlider2.css" type="text/css"?>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xml:space="preserve"
+                                    width="142px"
+                                    height="100px"
+                                    version="1.1"
+                                    style="
+                                        shape-rendering: geometricPrecision;
+                                        text-rendering: geometricPrecision;
+                                        image-rendering: optimizeQuality;
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                    "
+                                    viewBox="0 0 142 100.05"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xmlns:xodm="http://www.corel.com/coreldraw/odm/2003"
+                                >
+                                    <g id="Camada_x0020_1">
+                                        <metadata
+                                            id="CorelCorpID_0Corel-Layer"
+                                        />
+                                        <g id="_2200845113472">
+                                            <path
+                                                class="fil0"
+                                                d="M71 0c-30.34,0 -56.83,16.48 -71,40.98l46.33 26.75c4.92,-8.52 14.13,-14.24 24.67,-14.24 10.54,0 19.75,5.72 24.67,14.24l46.33 -26.75c-14.17,-24.5 -40.66,-40.98 -71,-40.98z"
+                                            />
+                                            <circle
+                                                class="fil0"
+                                                cx="71"
+                                                cy="81.97"
+                                                r="18.08"
+                                            />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <div id="Sweeper1" class="positionSVG two">
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                <!-- Creator: CorelDRAW 2020 (64 Bit) -->
+                                <?xml-stylesheet href="HorizontalSweeper2.css" type="text/css"?>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xml:space="preserve"
+                                    width="56px"
+                                    height="100px"
+                                    version="1.1"
+                                    style="
+                                        shape-rendering: geometricPrecision;
+                                        text-rendering: geometricPrecision;
+                                        image-rendering: optimizeQuality;
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                    "
+                                    viewBox="0 0 56 99.89"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xmlns:xodm="http://www.corel.com/coreldraw/odm/2003"
+                                >
+                                    <defs>
+                                        <mask id="id0">
+                                            <linearGradient
+                                                id="id1"
+                                                gradientUnits="userSpaceOnUse"
+                                                x1="28"
+                                                y1="0"
+                                                x2="28"
+                                                y2="99.89"
+                                            >
+                                                <stop
+                                                    offset="0"
+                                                    style="
+                                                        stop-opacity: 0;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                                <stop
+                                                    offset="1"
+                                                    style="
+                                                        stop-opacity: 1;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                            </linearGradient>
+                                            <rect
+                                                style="fill: url(#id1)"
+                                                x="-1.18"
+                                                y="-1.18"
+                                                width="58.36"
+                                                height="57.47"
+                                            />
+                                        </mask>
+                                        <mask id="id2">
+                                            <linearGradient
+                                                id="id3"
+                                                gradientUnits="userSpaceOnUse"
+                                                x1="28"
+                                                y1="0"
+                                                x2="28"
+                                                y2="99.89"
+                                            >
+                                                <stop
+                                                    offset="0"
+                                                    style="
+                                                        stop-opacity: 0;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                                <stop
+                                                    offset="1"
+                                                    style="
+                                                        stop-opacity: 1;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                            </linearGradient>
+                                            <rect
+                                                style="fill: url(#id3)"
+                                                x="8.77"
+                                                y="62.62"
+                                                width="38.46"
+                                                height="38.45"
+                                            />
+                                        </mask>
+                                    </defs>
+                                    <g id="Camada_x0020_1">
+                                        <metadata
+                                            id="CorelCorpID_0Corel-Layer"
+                                        />
+                                        <g id="_2201078832816">
+                                            <path
+                                                class="fil0"
+                                                style="mask: url(#id0)"
+                                                d="M37.73 55.11l18.27 -50.19c-8.74,-3.18 -18.16,-4.92 -28,-4.92 -9.84,0 -19.26,1.74 -28,4.92l18.27 50.19c3.04,-1.1 6.31,-1.71 9.73,-1.71 3.42,0 6.69,0.61 9.73,1.71z"
+                                            />
+                                            <path
+                                                class="fil0"
+                                                style="mask: url(#id2)"
+                                                d="M28 63.8c9.97,0 18.05,8.08 18.05,18.05 0,9.96 -8.08,18.04 -18.05,18.04 -9.97,0 -18.05,-8.08 -18.05,-18.04 0,-9.97 8.08,-18.05 18.05,-18.05z"
+                                            />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div id="value1" class="value">θ = 100°</div>
+                        </div>
+
+                        <div id="Vertical" class="caixote two">
+                            <div id="title2" class="title">
+                                <h2>Ângulo Vertical</h2>
+                            </div>
+
+                            <div id="gauge2" class="positionSVG three">
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                <!-- Creator: CorelDRAW 2020 (64 Bit) -->
+                                <?xml-stylesheet href="HorizontalSlider2.css" type="text/css"?>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xml:space="preserve"
+                                    width="142px"
+                                    height="100px"
+                                    version="1.1"
+                                    style="
+                                        shape-rendering: geometricPrecision;
+                                        text-rendering: geometricPrecision;
+                                        image-rendering: optimizeQuality;
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                    "
+                                    viewBox="0 0 142 100.05"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xmlns:xodm="http://www.corel.com/coreldraw/odm/2003"
+                                >
+                                    <g id="Camada_x0020_1">
+                                        <metadata
+                                            id="CorelCorpID_0Corel-Layer"
+                                        />
+                                        <g id="_2200845113472">
+                                            <path
+                                                class="fil0"
+                                                d="M71 0c-30.34,0 -56.83,16.48 -71,40.98l46.33 26.75c4.92,-8.52 14.13,-14.24 24.67,-14.24 10.54,0 19.75,5.72 24.67,14.24l46.33 -26.75c-14.17,-24.5 -40.66,-40.98 -71,-40.98z"
+                                            />
+                                            <circle
+                                                class="fil0"
+                                                cx="71"
+                                                cy="81.97"
+                                                r="18.08"
+                                            />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <div id="Sweeper2" class="positionSVG four">
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                <!-- Creator: CorelDRAW 2020 (64 Bit) -->
+                                <?xml-stylesheet href="HorizontalSweeper2.css" type="text/css"?>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xml:space="preserve"
+                                    width="56px"
+                                    height="100px"
+                                    version="1.1"
+                                    style="
+                                        shape-rendering: geometricPrecision;
+                                        text-rendering: geometricPrecision;
+                                        image-rendering: optimizeQuality;
+                                        fill-rule: evenodd;
+                                        clip-rule: evenodd;
+                                    "
+                                    viewBox="0 0 56 99.89"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xmlns:xodm="http://www.corel.com/coreldraw/odm/2003"
+                                >
+                                    <defs>
+                                        <mask id="id0">
+                                            <linearGradient
+                                                id="id1"
+                                                gradientUnits="userSpaceOnUse"
+                                                x1="28"
+                                                y1="0"
+                                                x2="28"
+                                                y2="99.89"
+                                            >
+                                                <stop
+                                                    offset="0"
+                                                    style="
+                                                        stop-opacity: 0;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                                <stop
+                                                    offset="1"
+                                                    style="
+                                                        stop-opacity: 1;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                            </linearGradient>
+                                            <rect
+                                                style="fill: url(#id1)"
+                                                x="-1.18"
+                                                y="-1.18"
+                                                width="58.36"
+                                                height="57.47"
+                                            />
+                                        </mask>
+                                        <mask id="id2">
+                                            <linearGradient
+                                                id="id3"
+                                                gradientUnits="userSpaceOnUse"
+                                                x1="28"
+                                                y1="0"
+                                                x2="28"
+                                                y2="99.89"
+                                            >
+                                                <stop
+                                                    offset="0"
+                                                    style="
+                                                        stop-opacity: 0;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                                <stop
+                                                    offset="1"
+                                                    style="
+                                                        stop-opacity: 1;
+                                                        stop-color: white;
+                                                    "
+                                                />
+                                            </linearGradient>
+                                            <rect
+                                                style="fill: url(#id3)"
+                                                x="8.77"
+                                                y="62.62"
+                                                width="38.46"
+                                                height="38.45"
+                                            />
+                                        </mask>
+                                    </defs>
+                                    <g id="Camada_x0020_1">
+                                        <metadata
+                                            id="CorelCorpID_0Corel-Layer"
+                                        />
+                                        <g id="_2201078832816">
+                                            <path
+                                                class="fil0"
+                                                style="mask: url(#id0)"
+                                                d="M37.73 55.11l18.27 -50.19c-8.74,-3.18 -18.16,-4.92 -28,-4.92 -9.84,0 -19.26,1.74 -28,4.92l18.27 50.19c3.04,-1.1 6.31,-1.71 9.73,-1.71 3.42,0 6.69,0.61 9.73,1.71z"
+                                            />
+                                            <path
+                                                class="fil0"
+                                                style="mask: url(#id2)"
+                                                d="M28 63.8c9.97,0 18.05,8.08 18.05,18.05 0,9.96 -8.08,18.04 -18.05,18.04 -9.97,0 -18.05,-8.08 -18.05,-18.04 0,-9.97 8.08,-18.05 18.05,-18.05z"
+                                            />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <div id="value2" class="value">φ = 100°</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 mx-auto my-auto text-center">
+                        <img
+                            class="img-responsive"
+                            src="../static/img/1.jpg"
+                            alt="teste"
+                        />
+                    </div>
+
+                    <div class="col-md-2 mx-auto my-auto text-center">
+                        <div class="col-md-4 mx-auto my-auto text-center">
+                            <div class="ca t center-align">
+                                <div class="center-align">
+                                    <h4>Horizontal</h4>
+                                </div>
+                                <div class="center-align">
+                                    <button
+                                        type="button"
+                                        class="btn btn-light btn-lg"
+                                    >
+                                        Varrer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mx-auto my-auto text-center">
+                            <div class="ca t center-align">
+                                <div class="center-align">
+                                    <h4>Controle</h4>
+                                </div>
+                                <div class="center-align">
+                                    <canvas
+                                        id="joystick"
+                                        height="300"
+                                        width="300"
+                                    ></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mx-auto my-auto text-center">
+                            <div class="ca t center-align">
+                                <div class="center-align">
+                                    <h4>Vertical</h4>
+                                </div>
+                                <div class="center-align align-middle">
+                                    <button
+                                        type="button"
+                                        class="btn btn-light btn-lg"
+                                    >
+                                        Varrer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--footer / contact-->
+        <footer class="py-6 bg-dark">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-12 text-muted text-center small-xl">
+                        &copy;
+                        <a href="https://github.com/selguranca/selguranca"
+                            >2022 SELGURANÇA - All Rights Reserved
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.5.0/feather.min.js"></script>
+
+        <script src="../static/js/createjs.min.js"></script>
+        <script src="../static/js/hammer.min.js"></script>
+
+        <script src="../static/js/scripts.js"></script>
     </body>
 </html>
