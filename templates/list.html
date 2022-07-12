@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Historico de detecções</h2>
+        <table border="1">
+            <thead>
+                <td>TimeStamp</td>
+                <td>PeopleCount</td>
+                <td>Horizontal Angle</td>
+                <td>Vertical Angle</td>
+                <td>Image</td>
+            </thead>
+
+            {% for row in rows %}
+            <tr>
+                <td>{{row["time_stamp"]}}</td>
+                <td>{{row["people_count"]}}</td>
+                <td>{{row["horizontal_angle"]}}</td>
+                <td>{{row["vertical_angle"]}}</td>
+                <td><a href="{{row['image']}}"> Frame </a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="/">Go back to home page</a>
+    </body>
+</html>

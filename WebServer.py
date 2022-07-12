@@ -1,9 +1,12 @@
 """Flask WebServer."""
+import base64
 from glob import escape
 from multiprocessing import Lock
 from queue import Queue
 import time
 from typing import Generator
+import sqlite3 as sql
+import json
 
 from flask import Flask
 from flask import render_template, Response, request
@@ -102,3 +105,138 @@ def servo_view(cmd: str) -> Response:
 @app.route("/")
 def home() -> Response:
     return render_template('index.html')
+
+
+@app.route("/event", methods=['POST', 'GET', 'PUT', 'DELETE'])
+def handle_event():
+    # return Response(f"Teve um {request.method} no /event")
+    # request.args.get
+
+    if(request.method == 'GET'):
+
+        try:
+            event_id = request.args.get('id', '')
+
+            with sql.connect("database.db") as con:
+                cur = con.cursor()
+
+                cur.execute("SELECT * FROM events WHERE id = ?", event_id)
+
+                msg = cur.fetchone()
+
+                #msg = "Record successfully added :D"
+
+        except:
+            msg = "Error in read operation :("
+
+        finally:
+            con.close()
+            return render_template("results.html", msg=msg)
+
+    elif(request.method == 'POST'):
+
+        data = json.loads(request.data)
+
+        # Just a regular POST:
+        if ('action' not in data):
+
+            try:
+                event_people_count = data['people_count']
+                event_time_stamp = data['time_stamp']
+                event_horizontal_angle = data['horizontal_angle']
+                event_vertical_angle = data['vertical_angle']
+                event_image = data['image']
+
+                con = sql.connect("database.db")
+                cur = con.cursor()
+                cur.execute("INSERT INTO events (people_count, time_stamp,\
+                            horizontal_angle, vertical_angle, image) VALUES (?,?,?,?,?)",
+                            (event_people_count, event_time_stamp,
+                             event_horizontal_angle, event_vertical_angle, event_image))
+                con.commit()
+
+
+            except Exception as e:
+                print(e)
+                con.rollback()
+
+            finally:
+                con.close()
+                return Response("200 OK")
+
+        # If the user sent the 'action' parameter and it was 'UPDATE':
+        elif (data['action'] == 'PATCH' or data['action'] == 'UPDATE'):
+
+            try:
+                event_id = data['id']
+                event_people_count = data['people_count']
+                event_time_stamp = data['time_stamp']
+                event_horizontal_angle = data['horizontal_angle']
+                event_vertical_angle = data['vertical_angle']
+                event_image = data['image']
+
+                con = sql.connect("database.db")
+                cur = con.cursor()
+                cur.execute("UPDATE events SET people_count = ?, \
+                            time_stamp = ?, horizontal_angle = ?,\
+                            vertical_angle = ?, image = ? WHERE id = ?",
+                            (event_people_count, event_time_stamp, event_horizontal_angle,
+                             event_vertical_angle, event_image, event_id))
+                con.commit()
+                print("Record successfully updated :D")
+                msg = "Record successfully updated :D"
+
+                # insert or replace into Book (ID, Name, TypeID, Level, Seen) values ((select ID from Book where Name = "SearchName"), "SearchName", ...);
+
+            except Exception as e:
+                print(e)
+                con.rollback()
+                print("Error in updating operation :(")
+                msg = "Error in updating operation :("
+
+            finally:
+                con.close()
+                return render_template("results.html", msg=msg)
+
+        # If the user sent the 'action' parameter and it was 'DELETE':
+        elif (data['action'] == 'DELETE'):
+
+            try:
+                event_id = data['id']
+
+                #print(f"Event id: {event_id}")
+
+                con = sql.connect("database.db")
+                cur = con.cursor()
+                # Essa bosta tava dando erro por motivos que eu desconheço. Usei uma gambiarra:
+                stringchata = "DELETE FROM events WHERE id = {}".format(
+                    event_id)
+                cur.execute(stringchata)
+                con.commit()
+
+                print("Record successfully deleted :D")
+                msg = "Record successfully deleted :D"
+
+            except Exception as e:
+                print(e)
+                con.rollback()
+                print("Error in deleting operation :(")
+                msg = "Error in deleting operation :("
+
+            finally:
+                con.close()
+                return render_template("results.html", msg=msg)
+
+
+@app.route("/events")
+def handle_events():
+    # return Response(f"Pediram todo conteudo da tabela")
+    conn = sql.connect("database.db")
+    conn.row_factory = sql.Row
+
+    cur = conn.cursor()
+    cur.execute("select * from events")
+
+    rows = cur.fetchall()
+    conn.close()
+    return render_template("list.html", rows=rows)

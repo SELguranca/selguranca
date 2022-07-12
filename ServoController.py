@@ -9,7 +9,7 @@ Angles = Enum("MotorIndex", "PHI THETA", module=__name__)
 
 class Controller:
 
-    motors: dict[Angles, Servomotor]
+    motors: dict[Angles, Servomotor] = {}
 
     def __init__(self, vertical: Servomotor, horizontal: Servomotor) -> None:
         self.motors[Angles.THETA] = vertical
