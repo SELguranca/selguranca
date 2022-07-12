@@ -21,11 +21,21 @@
 /*!
 * -----------------Teste------------------------- 
 */
-body{
+
+body,html{
+  height: 100%;
+}
+
+body,html{
   background-color: #343a40;
 }
 
+.foot{
+  margin-top: 3%;
+  color: #FFFF;
+}
 .img-1{
+  float: center;
   margin-top: 3%;
   text-align: center;
 }
@@ -68,6 +78,7 @@ body{
     margin: 10px;
     vertical-align: right;
   }
+
   .ca.t1 {
     text-align: center;
     float: right;
@@ -82,7 +93,7 @@ body{
 
   .caixote {
     text-align: center;
-    height: 220px;
+    height: 250px;
     width: 250px;
     border-radius: 10%;
     display: flex;
@@ -94,7 +105,7 @@ body{
   }
   
   .caixote.two {
-    height: 260px;
+    height: 250px;
     width: 250px;
     border-radius: 10%;
     display: flex;
