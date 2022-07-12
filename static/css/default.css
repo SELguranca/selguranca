@@ -5,16 +5,7 @@
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)*/
 
 :root {
-  --gray-dark: #343a40;
-  --primary: #00e676;
-  --secondary:  #343a40;
-  --success: #00e676;
-  --info: #aa00ff;
-  --warning: #ff9100;
-  --danger: #ff1744;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --breakpoint-xs: 0;
+   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
@@ -30,10 +21,27 @@
 /*!
 * -----------------Teste------------------------- 
 */
-body{
+
+body,html{
+  height: 100%;
+}
+
+body,html{
   background-color: #343a40;
 }
 
+.foot{
+  margin-top: 3%;
+  color: #FFFF;
+}
+.img-1{
+  float: center;
+  margin-top: 3%;
+  text-align: center;
+}
+.logo{
+  margin-top: 5%;
+}
 
 
   #joystick {
@@ -60,19 +68,32 @@ body{
   }
 
   .ca.t {
+    float: right;
     text-align: center;
     height: 150px;
     width: 150px;
-    border-radius: 10%;
+    border-radius: 5%;
+    background-color: #202020;
+    position: relative;
+    margin: 10px;
+    vertical-align: right;
+  }
+
+  .ca.t1 {
+    text-align: center;
+    float: right;
+    height: 200px;
+    width: 150px;
+    border-radius: 5%;
     background-color: #202020;
     position: relative;
     margin: 10px;
     vertical-align: middle;
   }
 
-
   .caixote {
-    height: 220px;
+    text-align: center;
+    height: 250px;
     width: 250px;
     border-radius: 10%;
     display: flex;
@@ -80,10 +101,11 @@ body{
     justify-content: space-around;
     position: relative;
     margin: 10px;
+    text-align: center;
   }
   
   .caixote.two {
-    height: 260px;
+    height: 250px;
     width: 250px;
     border-radius: 10%;
     display: flex;
