@@ -60,17 +60,24 @@ Para o uso do software, foi elaborada uma lista com as bibliotecas que devem ser
 Além disso, deve-se habilitar o banco de dados, a partir dos scripts disponibilizados no repositório. Além disso, o servidor deve ser hospedado em um domínio, que pode ser pelo IP local, para testes, ou em um servidor dedicado, para a conexão, foi alterado o MAC da placa para um MAC que a rede reconheça como parte do servidor, para o caso do IP, pode-se conectar pelo navegador a partir do "http://endereçoIP/porta/Nome", estes valores de porta e nome podem ser alterados nos scripts do webserver.py.
 
 Alguns tutoriais úteis para o uso do projeto:
+
 Flask, que foi utilizado na confecção do projeto => [documentação do flask](https://flask.palletsprojects.com/en/2.1.x/)
+
 OpenCV, utilizado para o projeto => [documentação do OpenCV](https://learnopencv.com/histogram-of-oriented-gradients/)
+
 SQLite, utilizado para o projeto => [documentação do SQLite3](https://www.sqlite.org/quickstart.html)
+
 
 
 ### Sistema Operacional
 O sistema operacional foi utilizado e instalado a partir do guia oficial da distribuição, instalado em um cartão SD, e conectado a Rasp a partir de seu conector SDcard, a partir disso foi inicializado o sistema e configurado a seguindo o tutorial da distribuição para seu uso, com ela configurada, deve-se clonar o repositório, e inicializar os sistemas do servidor no sistema embarcado.
 
 Alguns tutoriais úteis para o uso da RASP:
+
 RaspBian, utilizado na confecção do projeto => [documentação do RaspBian](http://www.raspbian.org/)
+
 Git na RaspBerry, em caso de dúvidas => [documentação do RaspBian com Git](https://projects.raspberrypi.org/en/projects/getting-started-with-git/12)
+
 
 ### Página WEB
 
