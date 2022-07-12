@@ -5,16 +5,7 @@
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)*/
 
 :root {
-  --gray-dark: #343a40;
-  --primary: #00e676;
-  --secondary:  #343a40;
-  --success: #00e676;
-  --info: #aa00ff;
-  --warning: #ff9100;
-  --danger: #ff1744;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --breakpoint-xs: 0;
+   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
@@ -32,6 +23,11 @@
 */
 body{
   background-color: #343a40;
+}
+
+.img-1{
+  width: 100;
+  height: 100;
 }
 
 
@@ -80,6 +76,7 @@ body{
     justify-content: space-around;
     position: relative;
     margin: 10px;
+    text-align: center;
   }
   
   .caixote.two {
