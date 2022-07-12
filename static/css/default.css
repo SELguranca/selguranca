@@ -26,10 +26,12 @@ body{
 }
 
 .img-1{
-  width: 100;
-  height: 100;
+  margin-top: 3%;
+  text-align: center;
 }
-
+.logo{
+  margin-top: 5%;
+}
 
 
   #joystick {
@@ -56,6 +58,7 @@ body{
   }
 
   .ca.t {
+    float: right;
     text-align: center;
     height: 150px;
     width: 150px;
@@ -67,6 +70,7 @@ body{
   }
   .ca.t1 {
     text-align: center;
+    float: right;
     height: 200px;
     width: 150px;
     border-radius: 5%;
