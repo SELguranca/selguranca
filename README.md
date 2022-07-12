@@ -41,5 +41,3 @@ As funcionalidades da página incluem a visualização da imagem obtida da câme
 <p align = "center">
 <img src="https://github.com/SELguranca/selguranca/blob/Documentation/images/WEBAGE.jpeg"/>
 </p>
-
-5  na média em elepot nunca te pedi nada
