@@ -30,8 +30,6 @@ Para a visualização da página WEB, o servidor foi alocado na rede da universi
 
 As funcionalidades da página incluem a visualização da imagem obtida da câmera, o controle dos botôes de manipulação dos servos para controle manual ou de varreduras horizontais e verticais, e a visualização do ângulo de apontamento dos servomotores, além disso, a integração com o banco de dados para mostrar o histórico de acessos ao ambiente, com o horário e posição da câmera, além de uma foto do momento do alerta.
 
-![Página WEB](https://github.com/SELguranca/selguranca/blob/Documentation/images/WEBAGE.jpeg)
-
 <p align = "center">
-<img src="https://github.com/zenitheesc/Alcantara_v.1.0/blob/main/Other_Files/Images/Diagram.png"/>
+<img src="https://github.com/SELguranca/selguranca/blob/Documentation/images/WEBAGE.jpeg"/>
 </p>
