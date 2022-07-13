@@ -87,7 +87,23 @@ BootStrap, utilizado na confecção do projeto => [documentação do BootStrap](
 
 ## Implementação do projeto (APRESENTAÇÂO)
 
+A implementação do nosso projeto foi feita dividindo o projeto em etapas como as detalhadas abaixo, isto facilitou o nosso desenvolvimento e a explicação dos componentes do projeto de forma simplificada.
 
+### Hardware
+
+AAAAAAAAAAA
+
+### Software
+
+BBBBBBBBBBBBBB
+
+### Sistema operacional
+
+CCCCCCCCCCCCCC
+
+### Página WEB
+
+DDDDDDDDDDDDDDDD
 
 ## Implementações futuras
 
