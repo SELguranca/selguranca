@@ -155,7 +155,6 @@ def handle_event():
                              event_horizontal_angle, event_vertical_angle, event_image))
                 con.commit()
 
-
             except Exception as e:
                 print(e)
                 con.rollback()

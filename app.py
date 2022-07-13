@@ -18,9 +18,10 @@ def capture(stop: th.Event, detect: bool, config: dict):
     """Camera frame capture thread."""
     camera = cv2.VideoCapture(config['camera']['device'])
     last_count = -1
-    isdir = os.path.isdir("static/frames")
+    folder = "static/frames"
+    isdir = os.path.isdir(folder)
     if not isdir:
-        os.mkdir("static/frames")
+        os.mkdir(folder)
     while not stop.wait(0):
         ok, frame = camera.read()
         if not ok or frame is None or np.shape(frame) == ():
@@ -34,14 +35,14 @@ def capture(stop: th.Event, detect: bool, config: dict):
         jpeg = buffer.tobytes()
 
         if(count > 0 and count != last_count):
-            now = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
-            url = f"static/frames/frame_{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.jpg"
+            now = datetime.now()
+            url = f"{folder}/frame_{now.strftime('%Y-%m-%d-%H-%M-%S')}.jpg"
             cv2.imwrite(url, frame)
             horz = WebServer.controller.motors[Angles.PHI].angle
             vert = WebServer.controller.motors[Angles.THETA].angle
 
             data = {'people_count': count,
-                    'time_stamp': now,
+                    'time_stamp': now.strftime("%Y-%m-%d-%H:%M:%S"),
                     'horizontal_angle': horz,
                     'vertical_angle': vert,
                     'image': url

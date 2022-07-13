@@ -1,3 +1,71 @@
+const img = document.getElementById("camera");
+const fps_display = document.getElementById("fps");
+
+// FPS Counter
+let fps = 0;
+img.addEventListener("load", (_) => fps++);
+
+const timer = setInterval(() => {
+    if (fps_display) {
+        fps_display.innerHTML = fps.toString();
+        fps = 0;
+    } else {
+        clearInterval(timer);
+    }
+}, 1000);
+
+// Servo Command
+const servo = {
+    key: "",
+    request: async () => {
+        const res = await fetch(`/controls/request`);
+        const key = await res.text();
+
+        if (key == "-1") {
+            console.error("Failed to get servo access");
+            return;
+        }
+        console.log("Aquired Servo Access!!");
+        servo.key = key;
+        console.log(servo.key);
+    },
+    release: async () => {
+        const res = await fetch(`/controls/release/`, {
+            headers: { "Api-Key": servo.key },
+        });
+        const t = await res.text();
+        const ok = Number(t);
+        if (ok < 0) {
+            console.error("Failed, can't release what wasn't aquired");
+            return;
+        }
+        console.log("Servo Access Released!!");
+    },
+    send: async (cmd) => {
+        const res = await fetch(`/servo/${cmd}`, {
+            headers: { "Api-Key": servo.key },
+            body: JSON.stringify({ cmd }),
+        });
+        const content = await res.text();
+        console.log(`Servo command: '${cmd}'.\nResponse: `, content);
+    },
+};
+
+// Stream lifecycle
+let stream_id = "";
+window.addEventListener("load", async (ev) => {
+    const res = await fetch(`/camera_feed/0`);
+    const id = await res.text();
+    if (id) {
+        img.setAttribute("src", `/camera_feed/${id}`);
+        stream_id = id;
+    }
+});
+
+window.addEventListener("beforeunload", async (ev) => {
+    await fetch(`/camera_ctrl/${stream_id}/stop`);
+});
+
 $(function () {
     // init feather icons
     feather.replace();
@@ -132,9 +200,12 @@ function init() {
 
     // listen to events...
     mc.on("panmove", function (ev) {
+        let origin = document
+            .getElementById("joystick")
+            .getBoundingClientRect();
         var pos = $("#joystick").position();
-        var x = ev.center.x - pos.left - 150;
-        var y = ev.center.y - pos.top - 150;
+        var x = ev.center.x - pos.left - 150 - origin.x;
+        var y = ev.center.y - pos.top - 150 - origin.y;
         console.log("MOVE", { x, y, pos });
         $("#xVal").text("X: " + x);
         $("#yVal").text("Y: " + -1 * y);
@@ -171,67 +242,3 @@ function calculateCoords(angle, distance) {
 
     return coords;
 }
-
-const img = document.getElementById("camera");
-const fps_display = document.getElementById("fps");
-
-// FPS Counter
-let fps = 0;
-img.addEventListener("load", (_) => fps++);
-
-setInterval(() => {
-    fps_display.innerHTML = fps.toString();
-    fps = 0;
-}, 1000);
-
-// Servo Command
-const servo = {
-    key: "",
-    request: async () => {
-        const res = await fetch(`/controls/request`);
-        const key = await res.text();
-
-        if (key == "-1") {
-            console.error("Failed to get servo access");
-            return;
-        }
-        console.log("Aquired Servo Access!!");
-        servo.key = key;
-        console.log(servo.key);
-    },
-    release: async () => {
-        const res = await fetch(`/controls/release/`, {
-            headers: { "Api-Key": servo.key },
-        });
-        const t = await res.text();
-        const ok = Number(t);
-        if (ok < 0) {
-            console.error("Failed, can't release what wasn't aquired");
-            return;
-        }
-        console.log("Servo Access Released!!");
-    },
-    send: async (cmd) => {
-        const res = await fetch(`/servo/${cmd}`, {
-            headers: { "Api-Key": servo.key },
-            body: JSON.stringify({ cmd }),
-        });
-        const content = await res.text();
-        console.log(`Servo command: '${cmd}'.\nResponse: `, content);
-    },
-};
-
-// Stream lifecycle
-let stream_id = "";
-window.addEventListener("load", async (ev) => {
-    const res = await fetch(`/camera_feed/0`);
-    const id = await res.text();
-    if (id) {
-        img.setAttribute("src", `/camera_feed/${id}`);
-        stream_id = id;
-    }
-});
-
-window.addEventListener("beforeunload", async (ev) => {
-    await fetch(`/camera_ctrl/${stream_id}/stop`);
-});
