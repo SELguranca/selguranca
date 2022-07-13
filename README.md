@@ -61,7 +61,7 @@ Para identificar pessoas no laboratório foi utilizado a função HOG (Histogram
 
 O HOG foi escolhido por conta da sua otimização para uso em aplicações de identificação de pedestres, resultando em melhor velocidade de execução no hardware limitado da Raspberry Pi.
 
-Ao longo do desenvolvimento também experimentamos com algoritimos d tipo Haar Cascade, utilizados para identificação de rostos e partes do corpo, mas estes se mostraram mais onerosos em termos de processamento quando comparados com o HOG.
+Ao longo do desenvolvimento também experimentamos com algoritimos do tipo Haar Cascade, utilizados para identificação de rostos e partes do corpo, mas estes se mostraram mais onerosos em termos de processamento quando comparados com o HOG.
 
 Além disso, deve-se habilitar o banco de dados, a partir dos scripts disponibilizados no repositório. Além disso, o servidor deve ser hospedado em um domínio, que pode ser pelo IP local, para testes, ou em um servidor dedicado, para a conexão, foi alterado o MAC da placa para um MAC que a rede reconheça como parte do servidor, para o caso do IP, pode-se conectar pelo navegador a partir do "http://endereçoIP/porta/Nome", estes valores de porta e nome podem ser alterados nos scripts do webserver.py.
 
