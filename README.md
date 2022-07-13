@@ -138,7 +138,7 @@ A implementação do nosso projeto foi feita dividindo o projeto em etapas como 
  - Comunicação interna organizada em "Channels" de filas.
 
 
-### Página WEB
+## Página WEB
 
  - Sincronização com o estado dos motores
  - UI/UX otimizado para os comandos
