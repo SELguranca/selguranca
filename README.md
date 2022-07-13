@@ -91,15 +91,29 @@ A implementação do nosso projeto foi feita dividindo o projeto em etapas como 
 
 ### Hardware
 
-AAAAAAAAAAA
+### Conexões
+
+### Level-shifter
 
 ### Software
 
-BBBBBBBBBBBBBB
+#### HOG
 
-### Sistema operacional
+Para identificar pessoas no laboratório foi utilizado a função HOG (Histogram of Oriented Gradients) do framework OpenCV. Este framework também oferece funções para o acesso da câmera e captura dos frames, que então são redimensionados para a sua inserção no algorítmo HOG, que retorna coordenadas que indicam a posição dos indivídos no frame. Essas coordenadas são reescaladas e utilizadas para desenhar retângulos sobre uma determinada região no frame original.
 
-CCCCCCCCCCCCCC
+O HOG foi escolhido por conta da sua otimização para uso em aplicações de identificação de pedestres, resultando em melhor velocidade de execução no hardware limitado da Raspberry Pi.
+
+Ao longo do desenvolvimento também experimentamos com algoritimos d tipo Haar Cascade, utilizados para identificação de rostos e partes do corpo, mas estes se mostraram mais onerosos em termos de processamento quando comparados com o HOG.
+
+### Servo
+
+## Sistema operacional
+
+#### Distro
+
+### Threads
+
+### Servidor
 
 ### Página WEB
 
